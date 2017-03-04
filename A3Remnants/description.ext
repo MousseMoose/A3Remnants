@@ -1,0 +1,113 @@
+respawn=2;
+respawndelay=3;
+disabledAI=1;
+class cfgFunctions {
+	class mu {
+		
+		
+		class util {
+			file = "util";
+			class util_addToContainer {};
+			class util_applyTextures {};
+			class util_checkEmptyString {};
+			class util_checkEmptyStringArray {};
+			//class util_getVehicleHitPoints {};
+			class util_getVehicleTurretMags {};
+			class util_getVehicleTurretWeps {};
+			class util_getVehicleType {};
+			class util_getAllCargo {};
+			class util_getAllCargoEB {};
+			class util_addAllCargo {};
+			class util_assignedWeapons {};
+		};
+		
+		
+		class db {
+			file = "db";
+
+			class db_queryASYNC {};
+			class db_addToCargoQueue {};	
+			class db_remoteTakePut {};
+			class db_remoteHandleHeal {};
+			class db_remoteTouchdown {};
+			
+			class veh_destroyed {};
+			//class veh_getHitpoints {};
+			class veh_register {};
+			class veh_setUp {};
+			class veh_spawnWorld {};
+			class veh_switchSaveStatePos {};
+			class veh_updateLoopDmg {};
+			class veh_updateLoopMag {};
+			class veh_updateLoopPos {};
+			class veh_updateLoopCargo {};
+
+			class player_auth {};
+			class player_getInventory {};
+			class player_create {};
+			class player_register {};
+			
+			
+			class player_updateLoopPos {};
+			class player_updateLoopInv {};
+			class player_updateLoopDmg {};
+			
+		};
+		
+		class client {
+			file = "client";
+
+			class client_dbInventoryEventhandlers {};
+			class client_ehPutTake {};	
+			
+			
+		};
+		
+		
+	
+		
+	};
+};
+
+class CfgRemoteExec
+{        
+       class Functions
+       {
+               mode = 1;
+               jip = 0;
+               
+               class mu_fnc_db_remoteTakePut
+               {
+                	allowedTargets=2;
+               };
+               
+               class mu_fnc_db_remoteHandleHeal
+               {
+                	allowedTargets=2;
+               };
+               
+               class mu_fnc_db_remoteTouchdown 
+               { 
+              		allowedTargets=2;
+               };
+               
+               class mu_fnc_client_dbInventoryEventHandlers 
+               { 
+              		allowedTargets=1;
+               };
+               
+               class mu_fnc_veh_switchSaveStatePos 
+               { 
+              		allowedTargets=2;
+               };
+                 
+               //TODO: Battleeye filters or alternative to initPlayerServer.sqf
+               class bis_fnc_execvm
+               {
+               		allowedTargets=2;
+               };
+               
+
+       };        
+};
+	
