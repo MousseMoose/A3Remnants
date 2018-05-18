@@ -43,12 +43,23 @@ removeUniform			_unit;
 removeVest				_unit;
 removeBackpack			_unit;
 
-
+//add Weapons
+{
+    _weapon = _x select 0;
+     _unit addWeaponGlobal _weapon;
+    {
+     	  
+        if ((_forEachIndex!=0) && !(_x isEqualTo "") ) then {
+         	_unit addWeaponItem [_weapon,_x];
+        };
+        
+    } foreach _x;
+} foreach _weapons;
 
 
 
  
- //add Weapons
+
 
 
 
@@ -83,18 +94,9 @@ _unit addEventHandler ["Fired",{
 } }];
 
 
-{
-    _weapon = _x select 0;
-     _unit addWeaponGlobal _weapon;
-    {
-     	  
-        if ((_forEachIndex!=0) && !(_x isEqualTo "") ) then {
-         	_unit addWeaponItem [_weapon,_x];
-        };
-        
-    } foreach _x;
-} foreach _weapons;
+
 
 //_unit setVariable ["mu_charReady",true];
 //true
+
 

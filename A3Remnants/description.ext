@@ -73,7 +73,7 @@ class CfgRemoteExec
 {        
        class Functions
        {
-               mode = 1;
+               mode = 2;
                jip = 0;
                
                class mu_fnc_db_remoteTakePut

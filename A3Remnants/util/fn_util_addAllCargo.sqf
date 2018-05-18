@@ -8,6 +8,8 @@ params ["_container","_containerIndex","_cargo"];
 
 {
     _container addMagazineAmmoCargo  [_x select 0,1, _x select 1];
+	//diag_log ("adding " + str _x + " to container " + str _container + " " + typeOf _container);
+	//p3 = _container;
 } forEach ((_cargo select _containerIndex) select 1);
 
     	

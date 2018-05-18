@@ -1,5 +1,5 @@
 params ["_container" ]; //_container = _this select 0;
-private _cargo;
+private "_cargo";
 
 if(isNull _container) exitWith {
      [[],[],[[],[]],[[],[]]]

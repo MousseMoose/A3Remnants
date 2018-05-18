@@ -9,7 +9,7 @@
 /*_mission = _this  select 0;
 _textures = _this select 1;
 _veh = _this select 2;*/
-params["mission","_textures","_veh"];
+params ["_mission","_textures","_veh"];
 
 for [{_i=0},{_i<(count _textures)},{_i=_i+1}]do {
 	_config = configFile;

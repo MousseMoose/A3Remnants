@@ -29,6 +29,8 @@ mu_var_player_updateQueueINV = [];
 [] spawn mu_fnc_player_updateLoopInv;
 [] spawn mu_fnc_player_updateLoopDMG;
 
+//[] spawn {BlaBlaDebug = true;while {BlaBlaDebug} do {diag_log ("isNil? " + str isNil "mu_var_veh_updateQueueCARGO"); sleep 1; }};
+
 [] spawn mu_fnc_veh_updateLoopPos;
 [] spawn mu_fnc_veh_updateLoopDMG;
 [] spawn mu_fnc_veh_updateLoopMag;

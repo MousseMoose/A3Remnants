@@ -10,7 +10,11 @@ _update = [_this,2,false,[false]] call BIS_fnc_param;*/
 /*params [["_query","defaultQuery","",[""]],
 ["_params",[],[],[[]]],
 "_update"];*/
-params [["_query","defaultQuery"],["_params",[]]],["_update",false]];
+params  [
+			["_query","defaultQuery"],
+			["_params",[]],
+			["_update",false]
+		];
 
 if(_update) then {_update = 1;} else {_update=2;};
 {_query = format["%1:%2",_query,_x]} forEach _params;

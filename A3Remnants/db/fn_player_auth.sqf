@@ -4,49 +4,49 @@
 // Description: handles player authentication. Updates their profile and then calls character creation
 
 
-		_uid	= _this select 0;
-		_name	= _this select 1;
-		_unit	= _this select 2;
-        _client = owner _unit;
-		_par = [_uid];
-		_profile = ["getProfile",_par,false] call mu_fnc_db_queryASYNC;
-		
-		//check empty
-		if ((count _profile) != 0 ) then
-			{
-				//update profile
-				_par = [
-							_uid,
-							_name
-						];
-				_profile = ["updateProfile",_par,true] call mu_fnc_db_queryASYNC;
-			}
-		else
-			{
-				//register profile
-				_par = [
+_uid	= _this select 0;
+_name	= _this select 1;
+_unit	= _this select 2;
+_client = owner _unit;
+_par = [_uid];
+_profile = ["getProfile",_par,false] call mu_fnc_db_queryASYNC;
+
+//check empty
+if ((count _profile) != 0 ) then
+	{
+		//update profile
+		_par = [
 					_uid,
-					_name,
-					0,
-					0,
-					0
-						];
-						
-				_profile = ["registerProfile",_par,true] call mu_fnc_db_queryASYNC;
+					_name
+				];
+		_profile = ["updateProfile",_par,true] call mu_fnc_db_queryASYNC;
+	}
+else
+	{
+		//register profile
+		_par = [
+			_uid,
+			_name,
+			0,
+			0,
+			0
+				];
 				
-			};
-			
-		_par = [_uid];
-		_character = ["getCharacter",_par,false] call mu_fnc_db_queryASYNC;
-			
-            
-            
-            
-		//checks if player does not have an active player record.
-		if((count _character) == 0) then
-			{
-                 [_uid] call mu_fnc_player_register;
-			};
+		_profile = ["registerProfile",_par,true] call mu_fnc_db_queryASYNC;
+		
+	};
+	
+_par = [_uid];
+_character = ["getCharacter",_par,false] call mu_fnc_db_queryASYNC;
+	
+	
+	
+	
+//checks if player does not have an active player record.
+if((count _character) == 0) then
+	{
+		 [_uid] call mu_fnc_player_register;
+	};
             
 //after check, get player data
 //TODO: Detach from auth
