@@ -1,4 +1,4 @@
-// mu_fnc_srv_debugMYSQL
+// mgrif_fnc_srv_debugMYSQL
 // Parameters:
 //				_query:String 		query specified in .ini
 //				_params:Array		parameters for the query

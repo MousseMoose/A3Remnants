@@ -1,11 +1,11 @@
-// mu_fnc_player_updateInv
+// mgrif_fnc_player_updateInv
 // Parameters:
 //				_unit: 		passed by EH
 //				_container: passed by EH
 // Description:
 // Run on: Server
 
-#define MU_CONST_HALFUPDATEFREQ 5
+#define mgrif_CONST_HALFUPDATEFREQ 5
 
 _unit	   = _this select 0;
 _container = _this select 1;
@@ -16,15 +16,15 @@ _container = _this select 1;
 //the last change.
 
 //if container is saveable, add to queue
-if(!(isNil {_container getVariable "mu_var_vehicleID"})) then {
-	[_container] spawn mu_fnc_veh_addToCargoQueue;//TODO: function
+if(!(isNil {_container getVariable "mgrif_var_vehicleID"})) then {
+	[_container] spawn mgrif_fnc_veh_addToCargoQueue;//TODO: function
 };
 
-mu_var_EH_TP_queueCounter = mu_var_EH_TP_queueCounter + 1;
-if(mu_var_EH_TP_queueCounter==1) then {
-	uiSleep MU_CONST_UPDATEFREQ;
-	mu_update_player_inv = _unit call mu_fnc_player_getInventory;
+mgrif_var_EH_TP_queueCounter = mgrif_var_EH_TP_queueCounter + 1;
+if(mgrif_var_EH_TP_queueCounter==1) then {
+	uiSleep mgrif_CONST_UPDATEFREQ;
+	mgrif_update_player_inv = _unit call mgrif_fnc_player_getInventory;
 };
 		
-mu_var_EH_TP_queueCounter = mu_var_EH_TP_queueCounter-1;
+mgrif_var_EH_TP_queueCounter = mgrif_var_EH_TP_queueCounter-1;
 

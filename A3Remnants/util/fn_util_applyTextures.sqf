@@ -1,4 +1,4 @@
-/* mu_fnc_util_applyTextures
+/* mgrif_fnc_util_applyTextures
  * Parameters:
  *				_mission:	boolean, determines wether skin is defined in missionNameSpace
  *				_textures:  array of Numbers (index of skin in cfg) and Strings (custom path)

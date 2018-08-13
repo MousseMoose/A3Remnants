@@ -1,4 +1,4 @@
-// mu_fnc_util_getVehicleType
+// mgrif_fnc_util_getVehicleType
 // Parameters:
 //				_veh: vehicle whose type is to be determined
 // Description:	as config returns wrong hitpoint counts, this script works with arrays indicating hitpoints as strings to be used with configFile. This function determines which is to be used for the vehicle in question

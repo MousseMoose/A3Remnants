@@ -1,4 +1,4 @@
-// mu_fnc_
+// mgrif_fnc_
 // Parameters:
 //				_
 // Description: Handles wether to update vehicle or player update queue
@@ -10,4 +10,4 @@ while{((position _veh) select 2)>7} do {
     sleep 5;
 };
 diag_log format["Vehicle %1 touched down, switching savestate",_veh];
-[_veh,2,0] call mu_fnc_veh_switchSaveStatePos;
+[_veh,2,0] call mgrif_fnc_veh_switchSaveStatePos;

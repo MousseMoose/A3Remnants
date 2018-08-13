@@ -1,4 +1,4 @@
-// mu_fnc_veh_updateLoop
+// mgrif_fnc_veh_updateLoop
 // Parameters:
 //				_veh: vehicle
 //				_mode: Engine (0) or Rope (1) or ViV (2)
@@ -18,14 +18,14 @@ _mode = _this select 1;
 _value = _this select 2;
 //hint format["%1 %2 %3",_veh,_mode,_value];
 diag_log format[" savestatepos %1 %2 %3",_veh,_mode,_value];
-if((_veh getVariable ["mu_vehicleID",-1])>=0) then {
-    _queuePos = _veh getVariable ["mu_queuePos",-1];
-	_states =  _veh getVariable ["mu_vehSaveState", [0,0,0]];
+if((_veh getVariable ["mgrif_vehicleID",-1])>=0) then {
+    _queuePos = _veh getVariable ["mgrif_queuePos",-1];
+	_states =  _veh getVariable ["mgrif_vehSaveState", [0,0,0]];
 	_states set [_mode,_value];
     if(((_states select 0)>0)||((_states select 1)>0)||((_states select 2)>0)) then {
-        (mu_var_veh_updateQueuePOS select _queuePos) set [1,true];
+        (mgrif_var_veh_updateQueuePOS select _queuePos) set [1,true];
     } else {
-        (mu_var_veh_updateQueuePOS select _queuePos) set [1,false];
+        (mgrif_var_veh_updateQueuePOS select _queuePos) set [1,false];
     };
 	
 };

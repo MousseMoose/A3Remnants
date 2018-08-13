@@ -1,4 +1,4 @@
-// mu_fnc_
+// mgrif_fnc_
 // Parameters:
 //				_
 // Description:
@@ -14,16 +14,16 @@ deleteGroup _oldGroup;
 //TODO: handleHeal with waituntil animationstate
 player addEventhandler ["HandleHeal",{
     _this spawn {
-    		sleep 5;
-    		_this remoteExec ['mu_fnc_db_remoteHandleHeal',2,false];
+    		uisleep 5;
+    		_this remoteExec ['mgrif_fnc_db_remoteHandleHeal',2,false];
             false
             };
 }];
 
 player addEventhandler ["put",{
-    		_this call mu_fnc_client_ehPutTake;
+    		_this call mgrif_fnc_client_ehPutTake;
 }];
 player addEventhandler ["take",{
-    		_this call mu_fnc_client_ehPutTake;
+    		_this call mgrif_fnc_client_ehPutTake;
 }];
 

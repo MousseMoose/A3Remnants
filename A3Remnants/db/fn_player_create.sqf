@@ -1,30 +1,41 @@
-/*	mu_fnc_createPlayer
+/*	mgrif_fnc_createPlayer
  *	Parameters:
  *		_dbArr: 
  * Description:
  *
  */
  
- _unit = _this select 0;
- _dbArr = _this select 1;
+ params [
+	["_dbArr",[]],
+	["_uid",""]
+ ];
  
-	_pid 		= _dbArr select 0;
-	_pos 		= _dbArr select 2;
-    _inventory	= _dbArr select 3;
-		_equipAll 		= _inventory select 0;
-    		_asItms 	=  _equipAll select 0; //tactical swag
-            _equip   	= _equipAll select 1; //All of your fancy hats
-            _weapons 	= _equipAll select 2; //boom sticks
-		_cargo	=  _inventory select 1;
-    
-    _med 	=  _dbArr select 4;
-	_skills 	=  _dbArr select 5;
+ 
+_pid 		= _dbArr select 0;
+_pos 		= _dbArr select 2;
+_inventory	= _dbArr select 3;
+	_equipAll 		= _inventory select 0;
+		_asItms 	=  _equipAll select 0; //tactical swag
+		_equip   	= _equipAll select 1; //All of your fancy hats
+		_weapons 	= _equipAll select 2; //boom sticks
+	_cargo	=  _inventory select 1;
+
+_med 	=  _dbArr select 4;
+_skills 	=  _dbArr select 5;
     	
+_unit = (createGroup blufor) createUnit ["C_Man_casual_1_F", [0,0,0], [], 0, "CAN_COLLIDE"];
+_unit disableAI "WEAPONAIM";
+switch (_pos#2) do {
+    case "CROUCH": { _unit setUnitPos "MIDDLE"};
+    case "PRONE": { _unit setUnitPos "DOWN"};
+    default { _unit setUnitPos "UP" };
+};
+		
         
     
  //set Player variable so player can be identified in the database
- _unit setVariable ["mu_playerID", _pid,true];
- _unit setVariable ["mu_nothit",true];
+ _unit setVariable ["mgrif_playerID", _pid,true];
+ _unit setVariable ["mgrif_nothit",true];
  
  //set Player position
  _unit setPos (_pos select 0);
@@ -77,26 +88,38 @@ removeBackpack			_unit;
 	
 //add Cargo	
 {
-    [_x,_forEachIndex,_cargo] call mu_fnc_util_addAllCargo;
+    [_x,_forEachIndex,_cargo] call mgrif_fnc_util_addAllCargo;
 } foreach [uniformContainer _unit,vestContainer _unit,backpackContainer _unit];
 
 //Event Handlers
 
-_unit setVariable ["mu_notFired",true];
+_unit setVariable ["mgrif_notFired",true];
 _unit addEventHandler ["Fired",{
     [_this select 0] spawn {
-    if((_this select 0) getVariable ["mu_notFired",false]) then {
-    (_this select 0) setVariable ["mu_notFired",false];
-    mu_var_player_updateQueueINV pushbackunique (_this select 0);
+    if((_this select 0) getVariable ["mgrif_notFired",false]) then {
+    (_this select 0) setVariable ["mgrif_notFired",false];
+    mgrif_var_player_updateQueueINV pushbackunique (_this select 0);
 	sleep 3;
-    (_this select 0) setVariable ["mu_notFired",true];
+    (_this select 0) setVariable ["mgrif_notFired",true];
     }
 } }];
 
+_respawns = ["getProfileRespawns",[mgrif_const_worldID,_uid],false] call mgrif_fnc_db_queryASYNC;
+{
+	
+	[_unit,_x#1] call bis_fnc_addRespawnPosition;
+} forEach _respawns;
+
+_unit addMPEventHandler ["MPHit",{
+    [_this select 0] spawn mgrif_mphp;
+ }];
 
 
+_unit addMPEventHandler ["MPKilled",{
+	   _this spawn mgrif_mpkp;
+}];
 
-//_unit setVariable ["mu_charReady",true];
-//true
+
+_unit
 
 

@@ -1,8 +1,11 @@
 respawn=2;
 respawndelay=3;
+respawnButton = 1;
+respawnTemplates[] = { "MenuPosition" };
+respawnOnStart = -1;
 disabledAI=1;
 class cfgFunctions {
-	class mu {
+	class mgrif {
 		
 		
 		class util {
@@ -42,7 +45,8 @@ class cfgFunctions {
 			class veh_updateLoopPos {};
 			class veh_updateLoopCargo {};
 
-			class player_auth {};
+			class player_authProfile {};
+			class player_authCharacter {};
 			class player_getInventory {};
 			class player_create {};
 			class player_register {};
@@ -51,6 +55,11 @@ class cfgFunctions {
 			class player_updateLoopPos {};
 			class player_updateLoopInv {};
 			class player_updateLoopDmg {};
+			
+			class respawn_register {};
+			class respawn_registerProfileRespawn {};
+			class respawn_destroyed {};
+			class respawn_setDisabled {};
 			
 		};
 		
@@ -76,27 +85,27 @@ class CfgRemoteExec
                mode = 2;
                jip = 0;
                
-               class mu_fnc_db_remoteTakePut
+               class mgrif_fnc_db_remoteTakePut
                {
                 	allowedTargets=2;
                };
                
-               class mu_fnc_db_remoteHandleHeal
+               class mgrif_fnc_db_remoteHandleHeal
                {
                 	allowedTargets=2;
                };
                
-               class mu_fnc_db_remoteTouchdown 
+               class mgrif_fnc_db_remoteTouchdown 
                { 
               		allowedTargets=2;
                };
                
-               class mu_fnc_client_dbInventoryEventHandlers 
+               class mgrif_fnc_client_dbInventoryEventHandlers 
                { 
               		allowedTargets=1;
                };
                
-               class mu_fnc_veh_switchSaveStatePos 
+               class mgrif_fnc_veh_switchSaveStatePos 
                { 
               		allowedTargets=2;
                };

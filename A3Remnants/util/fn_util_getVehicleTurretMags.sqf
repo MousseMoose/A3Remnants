@@ -1,4 +1,4 @@
-// mu_fnc_util_getVehicleTurretMags
+// mgrif_fnc_util_getVehicleTurretMags
 // Parameters:
 //				_veh: vehicle whose type is to be determined
 // Description:	Returns turret magazines with driver magazines at the end

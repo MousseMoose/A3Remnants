@@ -32,7 +32,7 @@ if((_pos select 2)>10) then {
 //spawn vehicle
 _veh	=	_type createVehicle _pos;
 //diag_log format["PRE: type _veh:%1",typeName _veh];
-_veh setVariable ["mu_vehicleId", _vehicleID];
+_veh setVariable ["mgrif_vehicleId", _vehicleID];
 _veh setDir _dir;
 _veh setFuel _fuel;
 
@@ -148,51 +148,51 @@ for [{_i=0},{_i < count ((_cargoWMIB select 3) select 0)},{_i=_i+1}] do
 	};	
 */
 
-[_veh,0,_cargoWMIB] call mu_fnc_util_addAllCargo;
+[_veh,0,_cargoWMIB] call mgrif_fnc_util_addAllCargo;
 _cargoWMIB deleteAt 0;
-{[_x select 1,_forEachIndex,_cargoWMIB] call mu_fnc_util_addAllCargo;} foreach (everyContainer _veh);
+{[_x select 1,_forEachIndex,_cargoWMIB] call mgrif_fnc_util_addAllCargo;} foreach (everyContainer _veh);
 
 
 //insert object reference
 _tex pushBack _veh;
-_tex call mu_fnc_util_applyTextures;
+_tex call mgrif_fnc_util_applyTextures;
 
 
 
 //set up position and damage save loop
-_queuePos = mu_var_veh_updateQueuePOS pushBack [_veh,false];
-_veh setVariable ["mu_queuePos", _queuePos];
-_veh setVariable ["mu_vehSaveState",[0,0,0]];
+_queuePos = mgrif_var_veh_updateQueuePOS pushBack [_veh,false];
+_veh setVariable ["mgrif_queuePos", _queuePos];
+_veh setVariable ["mgrif_vehSaveState",[0,0,0]];
 
 //Engine: if engine is started/turned off, switch save state accordingly (vehicle, CASE_ENGINE, 0 or 1 depending on engine state)
 //TODO: Consider Edge case: Vehicle rolling but engine off
 //Note: isEngineOn is used as remote firing of the EH returns the OPPOSITE value for some reason
-_veh addEventHandler ["Engine",{_value = 0;if(isEngineOn (_this select 0)) then {_value = 1} else {_value = 0};[_this select 0,0,_value] spawn mu_fnc_veh_switchSaveStatePos;}];
+_veh addEventHandler ["Engine",{_value = 0;if(isEngineOn (_this select 0)) then {_value = 1} else {_value = 0};[_this select 0,0,_value] spawn mgrif_fnc_veh_switchSaveStatePos;}];
 //Ropes: If attached vehicles has saveState (can be saved in DB), switch save state (vehicle, CASE_ROPE, 1)
-_veh addEventHandler ["ropeAttach",{if((_this select 2) getVariable ["mu_saveStatePos",-1]>-1) then {[_this select 2,1,1] call mu_fnc_veh_switchSaveStatePos}}];
-_veh addEventHandler ["ropeBreak",{if((_this select 2) getVariable ["mu_saveStatePos",-1]>-1) then{[_this select 2,1,0] call mu_fnc_veh_switchSaveStatePos}}];
+_veh addEventHandler ["ropeAttach",{if((_this select 2) getVariable ["mgrif_saveStatePos",-1]>-1) then {[_this select 2,1,1] call mgrif_fnc_veh_switchSaveStatePos}}];
+_veh addEventHandler ["ropeBreak",{if((_this select 2) getVariable ["mgrif_saveStatePos",-1]>-1) then{[_this select 2,1,0] call mgrif_fnc_veh_switchSaveStatePos}}];
 
 
-_veh setVariable ["mu_nothit",true,true];
+_veh setVariable ["mgrif_nothit",true,true];
 _veh addMPEventHandler ["MPHit",{ 
-       _this spawn mu_mphv;
+       _this spawn mgrif_mphv;
  }];
 
 
 _veh addMPEventHandler ["MPKilled",{
-    	_this spawn mu_mpkv;
+    	_this spawn mgrif_mpkv;
 }];
 
-_veh setVariable ["mu_notFired",true,true];
+_veh setVariable ["mgrif_notFired",true,true];
 _veh addEventHandler ["Fired",{
     [_this select 0] spawn {
-    if((_this select 0) getVariable ["mu_notFired",false]) then {
-    (_this select 0) setVariable ["mu_notFired",false,true];
-    mu_var_veh_updateQueueMAG pushbackunique (_this select 0);
+    if((_this select 0) getVariable ["mgrif_notFired",false]) then {
+    (_this select 0) setVariable ["mgrif_notFired",false,true];
+    mgrif_var_veh_updateQueueMAG pushbackunique (_this select 0);
 	sleep 3;
-    (_this select 0) setVariable ["mu_notFired",true,true];
+    (_this select 0) setVariable ["mgrif_notFired",true,true];
     }
 } }];
 
-//_veh addEventHandler ["killed",{[((_this select 0) getVariable "mu_vehicleID")] call mu_fnc_veh_destroyed}]; //destroyed
+//_veh addEventHandler ["killed",{[((_this select 0) getVariable "mgrif_vehicleID")] call mgrif_fnc_veh_destroyed}]; //destroyed
 

@@ -1,5 +1,5 @@
 //OLD, NOT NEEDED
-// mu_fnc_util_checkEmptyString
+// mgrif_fnc_util_checkEmptyString
 // Parameters:
 //				_strCheck - String that gets compared to an empty string
 // Description: Checks if String is empty. If so, it gets replaced with '*', which is needed for database purposes

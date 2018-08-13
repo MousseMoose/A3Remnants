@@ -1,8 +1,8 @@
 //necessary for more efficient MPEventhandlers
-mu_mphp =  	compilefinal "";
-mu_mpkp =  	compilefinal "";
-mu_mphv =  	compilefinal "";
-mu_mpkv =	compilefinal "";
+mgrif_mphp =  	compilefinal "";
+mgrif_mpkp =  	compilefinal "";
+mgrif_mphv =  	compilefinal "";
+mgrif_mpkv =	compilefinal "";
 
 //TODO: Used stacked version?
 ingameUISetEventhandler ["action", "
@@ -10,20 +10,20 @@ ingameUISetEventhandler ["action", "
 	      switch (_this select 3) do {
 	        case 'LoadVehicle': {
 	            _this spawn {
-	                [vehicle player,2,1] remoteExec ['mu_fnc_veh_switchSaveStatePos',2,false];
+	                [vehicle player,2,1] remoteExec ['mgrif_fnc_veh_switchSaveStatePos',2,false];
 	            };
 	        };
 	        
 	        case 'UnloadVehicle': {
 	            _this spawn {
-	                [vehicle player] remoteExec ['mu_fnc_db_remoteTouchdown',2,false];
+	                [vehicle player] remoteExec ['mgrif_fnc_db_remoteTouchdown',2,false];
 	            };
 	        };
 	        
 	        case 'UnloadAllVehicles': {
                 
 	            (getVehicleCargo (_this select 0)) spawn {
-	                {[_x,2,0] remoteExec ['mu_fnc_db_remoteTouchdown',2,false]} forEach _this;
+	                {[_x,2,0] remoteExec ['mgrif_fnc_db_remoteTouchdown',2,false]} forEach _this;
 	            };
 	        };
 	        

@@ -1,4 +1,4 @@
-// mu_fnc_vehDestroyed
+// mgrif_fnc_vehDestroyed
 // Parameters:
 //					_vid: vehicleID of vehicle marked for deletion
 // Description:		deletes a destroyed Vehicle from the database

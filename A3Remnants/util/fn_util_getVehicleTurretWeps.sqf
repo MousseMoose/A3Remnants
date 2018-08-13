@@ -1,4 +1,4 @@
-// mu_fnc_util_getVehicleTurretWeps
+// mgrif_fnc_util_getVehicleTurretWeps
 // Parameters:
 //				_veh: vehicle whose type is to be determined
 // Description:	Returns turret weapons with driver weapons at the end
