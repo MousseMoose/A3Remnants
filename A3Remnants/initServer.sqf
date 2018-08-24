@@ -1,8 +1,9 @@
 if(isServer) then {
     mgrif_var_server_initDone = false;
     //initialise modules
-	[] execVM "util\initUtil.sqf";
-	[] execVM "db\initDB.sqf";
+	#include "interfaces\initInterfaces.sqf"
+	#include "util\initUtil.sqf"
+	#include "db\initDB.sqf"
 	waitUntil {!isNil "mgrif_fnc_veh_switchSaveStatePos"};
 	
 	mgrif_const_worldID=1; //Stratis
@@ -22,4 +23,10 @@ if(isServer) then {
     mgrif_var_server_initDone = true;
     publicVariable "mgrif_var_server_initDone";
     [] spawn mgrif_fnc_veh_setUp;
+	[] spawn mgrif_fnc_respawn_setUp;
 };
+
+
+//----------------Data
+waitUntil{!isNil "mgrif_var_respawn_areas"};
+mgrif_var_respawn_areas pushBack (getMarkerPos "mgrif_rs_0");

@@ -18,7 +18,8 @@ mgrif_var_veh_updateQueueMAG = [];
 mgrif_var_veh_updateQueueCARGO = [];
 //mgrif_var_veh_updateQueueCARGO = [[],[]];
 
-mgrif_var_respawn_areas = [];
+mgrif_var_respawn_areas = []; //Default Respawn areas
+mgrif_var_respawn_objects = [];
 
 
 mgrif_var_player_updateQueueDMG = [];
@@ -31,7 +32,6 @@ mgrif_var_player_updateQueueINV = [];
 [] spawn mgrif_fnc_player_updateLoopInv;
 [] spawn mgrif_fnc_player_updateLoopDMG;
 
-//[] spawn {BlaBlaDebug = true;while {BlaBlaDebug} do {diag_log ("isNil? " + str isNil "mgrif_var_veh_updateQueueCARGO"); sleep 1; }};
 
 [] spawn mgrif_fnc_veh_updateLoopPos;
 [] spawn mgrif_fnc_veh_updateLoopDMG;
@@ -48,10 +48,15 @@ mgrif_mphp =  compilefinal "if((_this select 0) getVariable ['mgrif_nothit',fals
 mgrif_mpkp =  compilefinal "
 								['playerKilled',[(_this select 0) getVariable ['mgrif_playerID',-1]],true] call mgrif_fnc_db_queryASYNC;
 								_respawnPoints = [];
-								{_respawnPoint = ([_x, 0, 150, 5, 0, 10, 0] call bis_fnc_findSafePos); _respawnPoint pushBack 0; _respawnPoints pushBack _respawnPoint} forEach mgrif_var_respawn_areas;
-								{[_this#0, _x] call bis_fnc_addRespawnPosition} forEach _respawnPoints;
+								{_respawnPoint = ([_x, 0, 50, 5, 0, 10, 0] call bis_fnc_findSafePos); _respawnPoint pushBack 0; _respawnPoints pushBack _respawnPoint} forEach mgrif_var_respawn_areas;
+								_respawnIDs=[];
+								{
+									_id = [_this#0, _x] call bis_fnc_addRespawnPosition;
+									_respawnIDs pushBack _id;
+								} forEach _respawnPoints;
+								(_this#0) setVariable ['mgrif_respawn_tempSpawnIDs',_respawnIDs];
 							";
-
+								//(_this#0) setVariable ["mgrif_db_tempSpawnIDs",_respawnIDs];
 mgrif_mphv = compilefinal "if((_this select 0) getVariable ['mgrif_nothit',true]) then {
 	    (_this select 0) setVariable ['mgrif_nothit',false,true];
 	    mgrif_var_veh_updateQueueDMG pushbackunique (_this select 0);
@@ -68,7 +73,7 @@ addMissionEventhandler["HandleDisconnect",{
         _id = _unit getVariable ["mgrif_playerID",-1];
         if(_id>0) then {
             ["updatePlayerInv",[[_unit] call mgrif_fnc_player_getInventory,_id],true] spawn mgrif_fnc_db_queryASYNC;
-            ["updatePlayerPos",[[position _unit,direction _unit,animationState _unit],_id],true] spawn mgrif_fnc_db_queryASYNC;
+            ["updatePlayerPos",[[position _unit,direction _unit,stance _unit],_id],true] spawn mgrif_fnc_db_queryASYNC;
         };
         deleteVehicle (_unit);
 		true
@@ -77,16 +82,18 @@ addMissionEventhandler["HandleDisconnect",{
 
 addMissionEventhandler["EntityRespawned",{
     _this spawn {
-        _unit = _this select 0;
+		//_this spawn {while {true} do {p3 = _this;publicVariable "p3";sleep 1}};
+		//_unit setVariable ["bis_fnc_getrespawnpositions_list", (_corpse getVariable ["bis_fnc_getrespawnpositions_list",[0,[],[],[],[]]]),true];
+		
+		waitUntil {sleep 1;alive (_this#0) && isPlayer (_this#0)};
+        _unit = _this#0;
+		_corpse = _this#1;
 		_uid = getPlayerUID _unit;
 		_return = [_uid,position _unit] call mgrif_fnc_player_register;
-		[_uid, owner _unit] call mgrif_fnc_player_authCharacter;
 		
+		{_x call bis_fnc_removeRespawnPosition} forEach (_corpse getVariable "mgrif_respawn_tempSpawnIDs");
 		
-        //[_uid] call mgrif_fnc_player_register;
-	    //_character = ["getCharacter",[_uid],false] call mgrif_fnc_db_queryASYNC;
-		//_character = _character select 0;
-		//[_this select 0,_character] call mgrif_fnc_player_create;
+		[_uid, owner _unit,true,(_corpse getVariable ["bis_fnc_getrespawnpositions_list",[0,[],[],[],[]]])] call mgrif_fnc_player_authCharacter;
     };
 }];
 

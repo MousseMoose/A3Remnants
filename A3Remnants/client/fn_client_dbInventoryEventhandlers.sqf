@@ -26,4 +26,6 @@ player addEventhandler ["put",{
 player addEventhandler ["take",{
     		_this call mgrif_fnc_client_ehPutTake;
 }];
-
+player addEventHandler ["Respawn", {cutText ["Respawning","BLACK FADED"];
+}];
+cutText ["","BLACK IN"];

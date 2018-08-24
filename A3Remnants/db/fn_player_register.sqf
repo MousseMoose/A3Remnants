@@ -2,7 +2,7 @@
 
 params [
 	["_uid",""],
-	["_pos",[5022.01,5900.3,0.00140381]]
+	["_pos",[] call mgrif_fnc_respawn_getRandomDefault]
 ];              			
 
 //inventory in format of mgrif_fnc_player_getInventory

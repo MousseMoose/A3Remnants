@@ -3,74 +3,24 @@ respawndelay=3;
 respawnButton = 1;
 respawnTemplates[] = { "MenuPosition" };
 respawnOnStart = -1;
+respawnDialog = 0;
 disabledAI=1;
+
+
+#include "inventory\cfgInventoryActions.hpp"
+
 class cfgFunctions {
 	class mgrif {
 		
 		
-		class util {
-			file = "util";
-			class util_addToContainer {};
-			class util_applyTextures {};
-			class util_checkEmptyString {};
-			class util_checkEmptyStringArray {};
-			//class util_getVehicleHitPoints {};
-			class util_getVehicleTurretMags {};
-			class util_getVehicleTurretWeps {};
-			class util_getVehicleType {};
-			class util_getAllCargo {};
-			class util_getAllCargoEB {};
-			class util_addAllCargo {};
-			class util_assignedWeapons {};
-		};
-		
-		
-		class db {
-			file = "db";
 
-			class db_queryASYNC {};
-			class db_addToCargoQueue {};	
-			class db_remoteTakePut {};
-			class db_remoteHandleHeal {};
-			class db_remoteTouchdown {};
-			
-			class veh_destroyed {};
-			//class veh_getHitpoints {};
-			class veh_register {};
-			class veh_setUp {};
-			class veh_spawnWorld {};
-			class veh_switchSaveStatePos {};
-			class veh_updateLoopDmg {};
-			class veh_updateLoopMag {};
-			class veh_updateLoopPos {};
-			class veh_updateLoopCargo {};
-
-			class player_authProfile {};
-			class player_authCharacter {};
-			class player_getInventory {};
-			class player_create {};
-			class player_register {};
-			
-			
-			class player_updateLoopPos {};
-			class player_updateLoopInv {};
-			class player_updateLoopDmg {};
-			
-			class respawn_register {};
-			class respawn_registerProfileRespawn {};
-			class respawn_destroyed {};
-			class respawn_setDisabled {};
-			
-		};
 		
-		class client {
-			file = "client";
-
-			class client_dbInventoryEventhandlers {};
-			class client_ehPutTake {};	
-			
-			
-		};
+		#include "util\functions.hpp"
+		#include "db\functions.hpp"
+		#include "client\functions.hpp"
+		#include "inventory\functions.hpp"
+		#include "respawnObjects\functions.hpp"
+		
 		
 		
 	
@@ -84,39 +34,29 @@ class CfgRemoteExec
        {
                mode = 2;
                jip = 0;
+			   
+			   #include "interfaces\cfgRemoteExec.hpp"
+			   #include "respawnObjects\cfgRemoteExec.hpp"
+			   #include "db\cfgRemoteExec.hpp"
                
-               class mgrif_fnc_db_remoteTakePut
-               {
-                	allowedTargets=2;
-               };
-               
-               class mgrif_fnc_db_remoteHandleHeal
-               {
-                	allowedTargets=2;
-               };
-               
-               class mgrif_fnc_db_remoteTouchdown 
-               { 
-              		allowedTargets=2;
-               };
+              
                
                class mgrif_fnc_client_dbInventoryEventHandlers 
                { 
               		allowedTargets=1;
                };
                
-               class mgrif_fnc_veh_switchSaveStatePos 
-               { 
-              		allowedTargets=2;
-               };
+
+			   
+			   
                  
-               //TODO: Battleeye filters or alternative to initPlayerServer.sqf
-               class bis_fnc_execvm
-               {
-               		allowedTargets=2;
-               };
                
 
        };        
 };
+
+
+
+// DEBUG
+enableDebugConsole = 2;
 	

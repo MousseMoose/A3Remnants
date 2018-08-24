@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   PRIMARY KEY (`id`),
   KEY `worldid` (`worldId`),
   CONSTRAINT `worldid` FOREIGN KEY (`worldId`) REFERENCES `worlds` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 -- Dumping structure for table arma.profilerespawns
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `profilerespawns` (
   KEY `unitRespawn_uid` (`uid`),
   CONSTRAINT `unitRespawn_respawnId` FOREIGN KEY (`respawn`) REFERENCES `respawns` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `unitRespawn_uid` FOREIGN KEY (`uid`) REFERENCES `profiles` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 -- Dumping structure for table arma.profiles
@@ -57,14 +57,15 @@ CREATE TABLE IF NOT EXISTS `profiles` (
 CREATE TABLE IF NOT EXISTS `respawns` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `worldid` int(10) unsigned NOT NULL,
-  `type` int(11) unsigned NOT NULL DEFAULT 0,
+  `type` varchar(100) NOT NULL DEFAULT '0',
   `pos` varchar(200) NOT NULL,
   `disabled` tinyint(3) unsigned NOT NULL DEFAULT 0,
   `intact` tinyint(3) unsigned NOT NULL DEFAULT 1,
+  `capacity` int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `respawn_wid` (`worldid`),
   CONSTRAINT `respawn_wid` FOREIGN KEY (`worldid`) REFERENCES `worlds` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 -- Dumping structure for table arma.vehicles
@@ -77,8 +78,8 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
   `hitpoints` varchar(150) NOT NULL DEFAULT '[]',
   `turretmags` varchar(1000) NOT NULL DEFAULT '[]',
   `turretweps` varchar(500) NOT NULL DEFAULT '[]',
-  `cargo_gmib` varchar(6000) NOT NULL DEFAULT '[]',
-  `cargo_misc` varchar(250) NOT NULL DEFAULT '[]',
+  `cargo_gmib` varchar(30000) NOT NULL DEFAULT '[]',
+  `cargo_misc` varchar(1000) NOT NULL DEFAULT '[]',
   `vehlock` varchar(10) NOT NULL DEFAULT '[]',
   `textures` varchar(250) NOT NULL DEFAULT '[]',
   `components` varchar(250) NOT NULL DEFAULT '[]',
@@ -95,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `worlds` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
